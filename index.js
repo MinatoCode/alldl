@@ -45,7 +45,7 @@ module.exports = async (req, res) => {
     if (url.includes('youtube.com') || url.includes('youtu.be')) {
       platform = 'YouTube';
       // Use external API
-      const apiRes = await axios.get(`https://min-ytdl.vercel.app/api/download?url=${encodeURIComponent(url)}`);
+      const apiRes = await axios.get(`https://minato-ytdl.vercel.app/videodl?url=${encodeURIComponent(url)}`);
       const data = apiRes.data;
 
       if (data.success) {
