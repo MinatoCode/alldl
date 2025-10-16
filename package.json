@@ -1,0 +1,16 @@
+{
+  "name": "unified-downloader-api",
+  "version": "1.0.0",
+  "description": "Unified video downloader API for YouTube, Facebook, TikTok, and Instagram",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js"
+  },
+  "author": "MinatoCode",
+  "license": "MIT",
+  "dependencies": {
+    "btch-downloader": "^5.0.1",
+    "express": "^4.18.2",
+    "axios": "latest"
+  }
+}
