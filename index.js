@@ -55,7 +55,7 @@ module.exports = async (req, res) => {
     else if (url.includes('facebook.com') || url.includes('fb.watch')) {
       platform = 'Facebook';
       const data = await fbdown(url);
-      downloadUrl = data.HD;
+      downloadUrl = data.Normal_video;
     } 
     else if (url.includes('tiktok.com')) {
       platform = 'TikTok';
