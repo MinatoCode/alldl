@@ -1,4 +1,3 @@
-const { fbdown, ttdl, igdl } = require('btch-downloader');
 const axios = require('axios');
 
 module.exports = async (req, res) => {
@@ -45,7 +44,7 @@ module.exports = async (req, res) => {
     if (url.includes('youtube.com') || url.includes('youtu.be')) {
       platform = 'YouTube';
       // Use external API
-      const apiRes = await axios.get(`https://minato-ytdl.vercel.app/videodl?url=${encodeURIComponent(url)}`);
+      const apiRes = await axios.get(`https://min-ytdl.vercel.app/api/download?url=${encodeURIComponent(url)}`);
       const data = apiRes.data;
 
       if (data.success) {
@@ -54,19 +53,30 @@ module.exports = async (req, res) => {
     } 
     else if (url.includes('facebook.com') || url.includes('fb.watch')) {
       platform = 'Facebook';
-      const data = await fbdown(url);
-      downloadUrl = data.Normal_video;
+      const apiRes = await axios.get(`https://fbdl-minato.vercel.app/api/fbdl?url=${encodeURIComponent(url)}`);
+      const data = apiRes.data;
+
+      if (data.success) {
+        downloadUrl = data.hd|| data.sd;
+      }
     } 
     else if (url.includes('tiktok.com')) {
       platform = 'TikTok';
-      const data = await ttdl(url);
-      if (Array.isArray(data.video)) downloadUrl = data.video[0];
-      else downloadUrl = data.video;
+     const apiRes = await axios.get(`https://minato-ttdl.vercel.app/api/ttdl?url=${encodeURIComponent(url)}`);
+      const data = apiRes.data;
+
+      if (data.success) {
+        downloadUrl = data.url;
+      }
     } 
     else if (url.includes('instagram.com')) {
       platform = 'Instagram';
-      const data = await igdl(url);
-      downloadUrl = data.result?.[0]?.url;
+      const apiRes = await axios.get(`https://igdl-minato.vercel.app/api/igdl?url=${encodeURIComponent(url)}`);
+      const data = apiRes.data;
+
+      if (data.success) {
+        downloadUrl = data.video || data.alternative_urls?.[0]?.url;
+      }
     } 
     else {
       res.status(400).json({ success: false, error: "Unsupported platform" });
@@ -93,4 +103,5 @@ module.exports = async (req, res) => {
     });
   }
 };
-        
+
+      
